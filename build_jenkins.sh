@@ -2,7 +2,7 @@
 
 tag="730926784978.dkr.ecr.us-west-2.amazonaws.com/dev/scaling-enigma"
 ver=1.0
-dirs="monitor websvr redis"
+dirs="monitor websvr redis syslogdocker"
 for dir in $dirs; do 
     pushd $dir
     echo "$PWD building..."
