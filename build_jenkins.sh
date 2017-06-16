@@ -6,7 +6,7 @@ dirs="monitor websvr redis syslogdocker"
 for dir in $dirs; do 
     pushd $dir
     echo "$PWD building..."
-    ./build_docker_image.sh 
+    ./build_docker_image.sh  $ver
     echo "sudo docker tag $dir:latest $tag-$dir:$ver"
     sudo docker tag $dir:latest $tag-$dir:$ver
     echo "sudo docker push $tag-$dir:$ver"

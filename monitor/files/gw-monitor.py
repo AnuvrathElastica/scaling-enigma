@@ -90,8 +90,8 @@ class monitorDb:
     def set_consec_error_status(self, module, state, consec_error_threshold):
         flags_array = [False]*int(consec_error_threshold)
         consec_key = 'consec_errors:'+str(self._instance)
-        consec_index = self._rh_status.hget(consec_key,'index')
-        consec_index %= int(consec_error_threshold)
+        consec_index = self._rh_status.incrby(consec_key, 'index', 1)
+        consec_index %= consec_error_threshold
         flags_array = string_to_bool(self._rh_status.hmget(consec_key,self._status_flag_dict.keys()))
         flags_array[consec_index] = state
         flag = reduce(lambda x, y: x | y, flags_array)
