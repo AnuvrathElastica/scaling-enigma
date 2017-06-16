@@ -40,6 +40,10 @@ class monitorDb:
         try:
             self._rh_status = Redis(host=os.environ['DB_PORT_6379_TCP_ADDR'], port=os.environ[
                                     'DB_PORT_6379_TCP_PORT'], db=0)
+            consec_key = 'consec_errors:'+str(instance)
+            if (not self._rh_status.hexists(consec_key, 'index')):
+                ret = self._rh_status.hset(consec_key,'index', 0)
+                logger.info("Setting %s  retval = %d" ,consec_key, ret)
         except Exception as ex:
             logger.critical("Redis Connect to Cfg Db failed Excepton = " + str(ex))
 
@@ -86,12 +90,6 @@ class monitorDb:
     def set_consec_error_status(self, module, state, consec_error_threshold):
         flags_array = [False]*int(consec_error_threshold)
         consec_key = 'consec_errors:'+str(self._instance)
-        if self._rh_status.hexists(consec_key, 'index'):
-            consec_index = int(self._rh_status.hget(consec_key,'index'))
-            self._rh_status.hincrby(consec_key, 'index', 1)
-        else:
-            consec_index = 0
-            self.rh_status.hset(consec_key, 'index', 0)
 
         consec_index %= int(consec_error_threshold)
         flags_array = string_to_bool(self._rh_status.hmget(consec_key,self._status_flag_dict.keys()))
