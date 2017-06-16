@@ -1,6 +1,10 @@
 #!/bin/bash
 
-tag="730926784978.dkr.ecr.us-west-2.amazonaws.com/dev/scaling-enigma"
+if [ $1 == "dev" ] ; then
+    tag="730926784978.dkr.ecr.us-west-2.amazonaws.com/dev/el-mgw-docker-monitor"
+else
+    tag="730926784978.dkr.ecr.us-west-2.amazonaws.com/release/el-mgw-docker-monitor"
+fi
 ver=1.0
 dirs="monitor websvr redis syslogdocker"
 for dir in $dirs; do 
