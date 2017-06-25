@@ -1,5 +1,8 @@
 redis
 requests
 pyping
+pyopenssl
+cryptography
+idna
 certifi
 urllib3[secure]

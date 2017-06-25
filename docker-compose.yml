@@ -10,7 +10,7 @@ services:
     mgw-monitor-redis:
         build: ./redis
         image: redis:latest
-        command: redis-server /etc/redis/redis.conf --loglevel verbose --appendonly yes
+        command: redis-server /etc/redis/redis.conf --appendonly yes
         volumes:
             - /var/log/elastica/mgw-monitor-redis:/var
             - /home/madmin/mgw-monitor/redis-data:/data
@@ -39,6 +39,7 @@ services:
         build: ./monitor
         image: monitor:latest
         command: bash ./files/docker-entry-point.sh
+#        command: bash ./files/debug-entry-point.sh
         privileged: true
         links: 
             - mgw-monitor-redis

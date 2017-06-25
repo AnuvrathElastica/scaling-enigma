@@ -90,7 +90,7 @@ class monitorDb:
     def set_consec_error_status(self, module, state, consec_error_threshold):
         flags_array = [False]*int(consec_error_threshold)
         consec_key = 'consec_errors:'+str(self._instance)
-        consec_index = self._rh_status.incrby(consec_key, 'index', 1)
+        consec_index = self._rh_status.hincrby(consec_key,'index',amount=1)
         consec_index %= consec_error_threshold
         flags_array = string_to_bool(self._rh_status.hmget(consec_key,self._status_flag_dict.keys()))
         flags_array[consec_index] = state
@@ -207,7 +207,7 @@ class curlOperations():
                              r.url, r.status_code , r.elapsed.total_seconds())
                 return False
         except Exception as ex:
-            logger.error("Request for url %s raised exception %s", r.url,str(ex))
+            logger.error("Request for url %s raised exception %s", url,str(ex))
             return False
 
 
@@ -221,7 +221,7 @@ def start_monitoring(gw_to_monitor):
     _curl_connect_timeout = float(os.environ['MONITOR_CURL_CONNECT_TIMEOUT'])
     _curl_max_time = float(os.environ['MONITOR_CURL_MAX_TIME'])
     _consec_fail_cnt = int(os.environ['MONITOR_CONSEC_FAILURES'])
-    _url_whitelist = os.environ['MONITOR_URL_WHITELIST']
+    _url_whitelist = os.environ['MONITOR_URL_WHITELIST'].split(' ')
     _duty_cycle_time = int(os.environ['MONITOR_DUTY_CYCLE_TIME'])
 
     logger.info("Final configs: CURL_CONNECT_TIMEOUT: %s, "
