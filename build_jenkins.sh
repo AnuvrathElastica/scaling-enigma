@@ -4,18 +4,17 @@
 if [ ${BRANCH}='master' ]; then
     version='latest'
 else
-    version=$MGW_MONITOR_DOCKER_IMAGE_VERSION
+    version=${MGW_MONITOR_DOCKER_IMAGE_VERSION}
 fi
 
 if [ -z $version ]; then
     echo "Bailing out VERSION $MGW_MONITOR_DOCKER_IMAGE_VERSION is null"
     exit 1
 else
-    echo "Building with version = $version"
+    echo "Building with version = $version : ${MGW_MONITOR_DOCKER_IMAGE_VERSION}"
 fi
 if [ -z ${MGW_MONITOR_DOCKER_IMAGE_TAG} ]; then
     echo "Bailing out TAG ${MGW_MONITOR_DOCKER_IMAGE_TAG} is null"
-    printenv
     exit 1
 else
     echo "If build successful will tag it with ${MGW_MONITOR_DOCKER_IMAGE_TAG}"
