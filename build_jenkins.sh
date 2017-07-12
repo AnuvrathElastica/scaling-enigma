@@ -16,7 +16,7 @@ if [ -z $version ]; then
 else
     echo "Building with version = $version : $MGW_MONITOR_DOCKER_IMAGE_VERSION"
 fi
-docker_image_tag="$MGW_MONITOR_DOCKER_IMAGE_TAG/mgw-docker"
+docker_image_tag="$MGW_MONITOR_DOCKER_IMAGE_TAG/el-mgw-docker"
 if [ -z $MGW_MONITOR_DOCKER_IMAGE_TAG ]; then
     echo "Bailing out TAG $MGW_MONITOR_DOCKER_IMAGE_TAG is null"
     exit 1
@@ -25,7 +25,7 @@ else
 fi
 
 
-dirs="monitor websvr"
+dirs="monitor"
 for dir in $dirs; do
     pushd $dir
     echo "$PWD building on branch $BRANCH_NAME"
