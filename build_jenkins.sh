@@ -1,11 +1,13 @@
 #!/bin/bash
 
-tag=${MGW_MONITOR_DOCKER_IMAGE_TAG}
-if [ ${BRANCH_NAME} == 'master' ]; then
+tag=$MGW_MONITOR_DOCKER_IMAGE_TAG
+
+if [ $BRANCH_NAME = 'master' ]; then
     ver = 'latest'
 else
-    ver=${MGW_MONITOR_DOCKER_IMAGE_VERSION}
+    ver=$MGW_MONITOR_DOCKER_IMAGE_VERSION
 fi
+
 if [ -z $tag ]; then
     echo "Bailing out $MGW_MONITOR_DOCKER_IMAGE_TAG is null"
     exit 1
