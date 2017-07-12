@@ -16,14 +16,14 @@ if [ -z $version ]; then
 else
     echo "Building with version = $version : $MGW_MONITOR_DOCKER_IMAGE_VERSION"
 fi
+docker_image_tag="$MGW_MONITOR_DOCKER_IMAGE_TAG/mgw-docker"
 if [ -z $MGW_MONITOR_DOCKER_IMAGE_TAG ]; then
     echo "Bailing out TAG $MGW_MONITOR_DOCKER_IMAGE_TAG is null"
     exit 1
 else
-    echo "If build successful will tag it with $MGW_MONITOR_DOCKER_IMAGE_TAG"
+    echo "If build successful will tag it with $docker_image_tag"
 fi
 
-docker_image_tag="$MGW_MONITOR_DOCKER_IMAGE_TAG/mgw-docker"
 
 dirs="monitor websvr"
 for dir in $dirs; do
@@ -33,6 +33,6 @@ for dir in $dirs; do
     echo "sudo docker tag $dir:$version $docker_image_tag-$dir:$version"
     sudo docker tag $dir:$version "$docker_image_tag-$dir:$version" || exit 1
     echo "sudo docker push $docker_image_tag-$dir:$version"
-    sudo docker push "$docker_image_tag/mgw-docker-$dir:$version" || exit 1
+    sudo docker push "$docker_image_tag-$dir:$version" || exit 1
     popd
 done

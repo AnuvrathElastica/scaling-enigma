@@ -12,7 +12,7 @@ services:
 #        links: 
 #            - mgw-monitor-syslog
     mgw-monitor-websvr:
-        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/dev/mgw-docker-websvr:latest
+        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/private/dev/mgw-docker-websvr:latest
         command: python app.py
 #        command: bash test.sh
         ports:
@@ -30,7 +30,7 @@ services:
             - mgw-monitor-redis
 #            - mgw-monitor-syslog
     mgw-monitor:
-        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/dev/mgw-docker-monitor:latest
+        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/private/dev/mgw-docker-monitor:latest
         command: bash ./files/docker-entry-point.sh
 #        command: bash ./files/debug-entry-point.sh
         privileged: true
