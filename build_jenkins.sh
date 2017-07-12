@@ -22,8 +22,8 @@ dirs="monitor websvr"
 for dir in $dirs; do
     pushd $dir
     echo "$PWD building on branch $BRANCH_NAME"
-    ./build_docker_image.sh || exit 1
-    echo "sudo docker docker_image_tag $dir:$VERSION $docker_image_tag-$dir:$VERSION"
+    ./build_docker_image.sh $VERSION || exit 1
+    echo "sudo docker tag $dir:$VERSION $docker_image_tag-$dir:$VERSION"
     sudo docker tag $dir:$VERSION "$docker_image_tag-$dir:$VERSION" || exit 1
     echo "sudo docker push $docker_image_tag-$dir:$VERSION"
     sudo docker push "$docker_image_tag/mgw-docker-$dir:$VERSION" || exit 1
