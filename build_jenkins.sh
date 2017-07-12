@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "Printing environment vars"
-printenv
-exit 0
+BRANCH="$1"
+MGW_MONITOR_DOCKER_IMAGE_TAG="$2"
+MGW_MONITOR_DOCKER_IMAGE_VERSION="$3"
 
 if [ $BRANCH='master' ]; then
     version='latest'
