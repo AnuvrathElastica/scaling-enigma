@@ -2,7 +2,7 @@
 
 tag=$MGW_MONITOR_DOCKER_IMAGE_TAG
 
-if [ $BRANCH = 'master' ]; then
+if [ $BRANCH='master' ]; then
     ver = 'latest'
 else
     ver=$MGW_MONITOR_DOCKER_IMAGE_VERSION
