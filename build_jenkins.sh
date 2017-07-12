@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo ${BRANCH}
+echo ${WORKSPACE}
+echo ${MGW_MONITOR_DOCKER_IMAGE_TAG}
+echo ${MGW_MONITOR_DOCKER_IMAGE_VERSION}
+
 
 if [ $BRANCH='master' ]; then
     version='latest'
