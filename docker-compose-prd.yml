@@ -9,24 +9,24 @@ services:
         volumes:
             - /var/log/elastica/mgw-monitor-redis:/var
             - /home/madmin/mgw-monitor/redis-data:/data
-    mgw-monitor-websvr:
-        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/release/mgw-docker-websvr:latest
-        command: python app.py
-        ports:
-        - "5000:5000"
-        environment: 
-            - WEB_LISTEN_PORT=5000
-            - DB_PORT_6379_TCP_ADDR=mgw-monitor-redis
-            - DB_PORT_6379_TCP_PORT=6379
-            - AUTH_USER=matrix
-            - AUTH_SECRET=u+6BFXz8fL*Zr;7g
-        volumes:
-            - /etc/ssl:/etc/ssl
-            - /var/log/elastica/mgw-monitor-websvr:/var/log
-        links: 
-            - mgw-monitor-redis
+#    mgw-monitor-websvr:
+#        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/release/mgw-docker-websvr:latest
+#        command: python app.py
+#        ports:
+#        - "5000:5000"
+#        environment: 
+#            - WEB_LISTEN_PORT=5000
+#            - DB_PORT_6379_TCP_ADDR=mgw-monitor-redis
+#            - DB_PORT_6379_TCP_PORT=6379
+#            - AUTH_USER=matrix
+#            - AUTH_SECRET=u+6BFXz8fL*Zr;7g
+#        volumes:
+#            - /etc/ssl:/etc/ssl
+#            - /var/log/elastica/mgw-monitor-websvr:/var/log
+#        links: 
+#            - mgw-monitor-redis
     mgw-monitor:
-        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/release/mgw-docker-monitor:latest
+        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/release/el-mgw-docker-monitor:latest
         command: bash ./files/docker-entry-point.sh
         privileged: true
         links: 

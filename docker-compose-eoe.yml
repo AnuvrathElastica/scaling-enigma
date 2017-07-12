@@ -9,34 +9,28 @@ services:
         volumes:
             - /var/log/elastica/mgw-monitor-redis:/var
             - /home/madmin/mgw-monitor/redis-data:/data
-#        links: 
-#            - mgw-monitor-syslog
-    mgw-monitor-websvr:
-        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/private/dev/mgw-docker-websvr:latest
-        command: python app.py
-#        command: bash test.sh
-        ports:
-        - "5000:5000"
-        environment: 
-            - WEB_LISTEN_PORT=5000
-            - DB_PORT_6379_TCP_ADDR=mgw-monitor-redis
-            - DB_PORT_6379_TCP_PORT=6379
-            - AUTH_USER=matrix
-            - AUTH_SECRET=u+6BFXz8fL*Zr;7g
-        volumes:
-            - /etc/ssl:/etc/ssl
-            - /var/log/elastica/mgw-monitor-websvr:/var/log
-        links: 
-            - mgw-monitor-redis
-#            - mgw-monitor-syslog
+              #    mgw-monitor-websvr:
+              #        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/private/dev/mgw-docker-websvr:latest
+              #        command: python app.py
+              #        ports:
+              #        - "5000:5000"
+              #       environment: 
+              #            - WEB_LISTEN_PORT=5000
+              #            - DB_PORT_6379_TCP_ADDR=mgw-monitor-redis
+              #            - DB_PORT_6379_TCP_PORT=6379
+              #            - AUTH_USER=matrix
+              #            - AUTH_SECRET=u+6BFXz8fL*Zr;7g
+              #        volumes:
+              #            - /etc/ssl:/etc/ssl
+              #            - /var/log/elastica/mgw-monitor-websvr:/var/log
+              #        links: 
+              #            - mgw-monitor-redis
     mgw-monitor:
-        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/private/dev/mgw-docker-monitor:latest
+        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/private/dev/el-mgw-docker-monitor:latest
         command: bash ./files/docker-entry-point.sh
-#        command: bash ./files/debug-entry-point.sh
         privileged: true
         links: 
             - mgw-monitor-redis
-#            - mgw-monitor-syslog
         volumes: 
             - /var/log/elastica/mgw-monitor:/var
         environment: 
