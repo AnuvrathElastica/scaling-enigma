@@ -1,0 +1,46 @@
+##########################################################
+## Docker Compose file to be used for prd environment.   #
+##########################################################
+version: "3"
+services:
+    mgw-monitor-redis:
+        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/release/el-redis:latest
+        command: redis-server /etc/redis/redis.conf --appendonly yes
+        volumes:
+            - /var/log/elastica/mgw-monitor-redis:/var
+            - /home/madmin/mgw-monitor/redis-data:/data
+    mgw-monitor-websvr:
+        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/release/mgw-docker-websvr:latest
+        command: python app.py
+        ports:
+        - "5000:5000"
+        environment: 
+            - WEB_LISTEN_PORT=5000
+            - DB_PORT_6379_TCP_ADDR=mgw-monitor-redis
+            - DB_PORT_6379_TCP_PORT=6379
+            - AUTH_USER=matrix
+            - AUTH_SECRET=u+6BFXz8fL*Zr;7g
+        volumes:
+            - /etc/ssl:/etc/ssl
+            - /var/log/elastica/mgw-monitor-websvr:/var/log
+        links: 
+            - mgw-monitor-redis
+    mgw-monitor:
+        image: 730926784978.dkr.ecr.us-west-2.amazonaws.com/release/mgw-docker-monitor:latest
+        command: bash ./files/docker-entry-point.sh
+        privileged: true
+        links: 
+            - mgw-monitor-redis
+        volumes: 
+            - /var/log/elastica/mgw-monitor:/var
+        environment: 
+            - DB_PORT_6379_TCP_ADDR=mgw-monitor-redis
+            - DB_PORT_6379_TCP_PORT=6379
+            - MGW_INSTANCE_NAME=eoe-pdx-mobile-gateway-0d098679acbd10d4a
+            - MGW_IP_ADDRESS=10.0.55.154
+            - MGW_PROXY_ADDRESS=172.20.254.254:3128
+            - MONITOR_CURL_CONNECT_TIMEOUT=10
+            - MONITOR_CURL_MAX_TIME=5
+            - MONITOR_CONSEC_FAILURES=3
+            - MONITOR_DUTY_CYCLE_TIME=30
+            - MONITOR_URL_WHITELIST=https://github.com https://apps.groupdocs.com https://exportwriter.zoho.com https://en.4sync.com https://www.surveymonkey.com https://slack.com https://mail.aol.com https://mail.yahoo.com https://portal.azure.com https://docs.google.com https://mail.live.com
