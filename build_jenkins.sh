@@ -13,6 +13,7 @@ if [ -z $version ]; then
 fi
 if [ -z ${MGW_MONITOR_DOCKER_IMAGE_TAG} ]; then
     echo "Bailing out TAG $MGW_MONITOR_DOCKER_IMAGE_TAG is null"
+    printenv
     exit 1
 fi
 
